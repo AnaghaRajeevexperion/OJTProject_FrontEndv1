@@ -12,8 +12,6 @@ function Login()
             `Logged in successfully welcome ${res.profileObj.name}. \n See console for full profile object.`
 
         );
-
-        // refreshTokenSetup(res);
     }
     
     const onFailure=(res: any)=>{

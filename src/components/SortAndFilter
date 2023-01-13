@@ -1,0 +1,34 @@
+// import React, { useState } from 'react';
+// import { useSelector, useDispatch } from 'react-redux';
+
+// interface Product {
+//   id: string;
+//   name: string;
+//   price: number;
+//   category: string;
+// }
+
+// const SortAndFilter = () => {
+//   const [filter, setFilter] = useState<string>('');
+//   const [sort, setSort] = useState<string>('');
+//   const products: Product[] = useSelector(state => state.products);
+//   const dispatch = useDispatch();
+
+//   const setFilterHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setFilter(e.target.value);
+//   };
+
+//   const setSortHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setSort(e.target.value);
+//   };
+
+//   const filteredProducts = products.filter(product =>
+//     product.name.toLowerCase().includes(filter.toLowerCase())
+//   );
+
+//   const sortedProducts =
+//     sort === 'ascending'
+//       ? filteredProducts
+//   }
+
+

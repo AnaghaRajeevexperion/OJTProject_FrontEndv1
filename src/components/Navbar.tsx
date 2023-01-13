@@ -5,9 +5,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { useState} from 'react'
+import {useState} from 'react'
 import Axios from 'axios';
-import image from '../src/assets/images/profile.jpg'
+import image from '../assets/images/profile.jpg'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material';
@@ -16,15 +16,17 @@ import Box from '@mui/material/Box';
 import { GoogleLogin } from 'react-google-login'
 import { GoogleLogout } from 'react-google-login'
 import { gapi } from 'gapi-script'
+import axios from "axios";
 
 
 const clientId="1023795112660-8mjlddldunru0no0mnj6vmh55bq447tu.apps.googleusercontent.com"
 const Navbar = () => {
-  const [name, setName] = useState()
+  const [name, setName] = useState(null)
   const [img, setImg] = useState(image)
+
   const [loggin, setLoggin] = useState(false)
   const [loggout, setLoggout] = useState(false)
-  const [token, setToken] = useState()
+  const [token, setToken] = useState(null)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -58,7 +60,6 @@ useEffect(()=>{
 }
 );
 
-
   const commonStyles = {
     bgcolor: 'background.paper',
     borderColor: 'text.primary',
@@ -70,21 +71,50 @@ useEffect(()=>{
 
   const onSuccess=(res: any)=>{
     
-    console.log("Login Sucess ! Current user :",res.profileObj);
-    console.log("id",res.profileObj.name);
-    console.log(res.tokenId);
-    console.log("url",res.profileObj.imageUrl);
-    setName(res.profileObj.name)
-    setImg(res.profileObj.imageUrl)
-    console.log("img",img);
+    setAnchorEl(null)
+    setToken(res.tokenId)
+    axios.get('http://localhost:8080/users')
+      .then(response =>{
+          const usersList=[...response.data._embedded.users]
+          let count=0;
+          for(const key in usersList)
+          {
+            if(usersList[key].email==res.profileObj.email)
+            {
+              count=1;
+              setName(usersList[key].user_name);
+              setImg(usersList[key].picture);
+            }
+          }
+          if(count==0)
+          {
+            axios.post('http:/localhost:80808/tokenrequest',{
+              usertoken:token
+            })
+            .then(response=>{
+              setName(response.data.name);
+              setImg(response.data.picture);
+            })
+          }
+      })
+    // console.log("Login Success ! Current user :",res.profileObj);
+    // console.log("id",res.profileObj.name);
+    // console.log(res.tokenId);
+    // console.log("url",res.profileObj.imageUrl);
+    // setName(res.profileObj.name)
+    // setImg(res.profileObj.imageUrl)
+    // console.log("img",img);
   }
  
   const onFailure=(res: any)=>{
-    console.log("Login Sucess ! Current user :",res);
-   
+    console.log("Login failed !",res);
     
   }
   const onLogout=()=>{
+    setAnchorEl(null)
+    setName(null);
+    setImg(image);
+    setToken(null)
     console.log("Logout Successfully");
     sessionStorage.clear();
     localStorage.clear();
@@ -105,8 +135,8 @@ useEffect(()=>{
       
 
           <Grid container justifyContent="flex-end">
-          <Typography variant='h6'>
-          {name} 
+          <Typography marginTop="1rem" variant='h6'>
+          Hi {name}! 
           </Typography>
           
             

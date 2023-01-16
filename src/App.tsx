@@ -1,18 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Fragment } from 'react';
 import './App.css';
-import Navbar from '../src/components/Navbar';
-import ProductList from '../src/components/ProductList';
-import { Filter } from './components/Filter';
-import Filters from './components/Filters';
+import Navbar from './components/Header/Navbar';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import MyProfile from './components/MyProfile';
+import Home from './components/HomePage/Home';
 
 function App() {
   return (
-    <div className="App">
+    <Fragment>
       <Navbar></Navbar>
-      <Filters></Filters>
-      <ProductList></ProductList>
-    </div>
+    <Home/>
+    <BrowserRouter>
+    <Switch>
+        <Route path="/myprofile" component={MyProfile} />
+    </Switch>
+    </BrowserRouter>
+    </Fragment>
   );
 }
 

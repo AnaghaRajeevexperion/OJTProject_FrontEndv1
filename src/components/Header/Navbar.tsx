@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import {useState} from 'react'
 import Axios from 'axios';
-import image from '../assets/images/profile.jpg'
+import image from '../../assets/images/profile.jpg'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material';
@@ -50,10 +50,6 @@ useEffect(()=>{
     setToken(gapi.auth.getToken().access_token)
     console.log("token",token);
     console.log("gapi",gapi);
-    // console.log("auth",auth.getToken());
-    // console.log("token",token);
-    // console.log("token",token);
-
   };
   gapi.load('client:auth2',start);
   
@@ -97,13 +93,7 @@ useEffect(()=>{
             })
           }
       })
-    // console.log("Login Success ! Current user :",res.profileObj);
-    // console.log("id",res.profileObj.name);
-    // console.log(res.tokenId);
-    // console.log("url",res.profileObj.imageUrl);
-    // setName(res.profileObj.name)
-    // setImg(res.profileObj.imageUrl)
-    // console.log("img",img);
+  
   }
  
   const onFailure=(res: any)=>{

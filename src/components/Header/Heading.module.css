@@ -1,0 +1,18 @@
+h1{
+    font-size: medium;
+    position: absolute;
+    white-space: nowrap;
+    color:rgb(16, 71, 110);
+    animation: floatText 8s infinite alternate ease-in-out;
+  }
+  
+  @keyframes floatText{
+    from {
+      left: 30%;
+    }
+  
+    to {
+      /* left: auto; */
+      left: 50%;
+    }
+  }

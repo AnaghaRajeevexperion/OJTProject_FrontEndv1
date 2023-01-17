@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Card from '@mui/joy/Card';
 import Typography from '@mui/joy/Typography';
-import { Button, MenuList } from '@mui/material';
+import { Button, Grid, MenuList } from '@mui/material';
 import axios from 'axios';
 import { Container } from '@mui/system';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -18,7 +18,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import Rating from '@mui/material/Rating';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import SortRoundedIcon from '@mui/icons-material/SortRounded';
@@ -31,11 +31,11 @@ export default function Home() {
     rating: number;
   };
   const [productList, setProductList] = useState<Product[] | null>(null);
-  const [filterStatus, setFilterStatus] = React.useState(false)
+  const [filterStatus, setFilterStatus] = React.useState(true)
   const [selectedName, setSelected] = useState([]);
   const [minAmount, setMinAmount] = useState<number>(0);
   const [maxAmount, setMaxAmount] = useState<number>(0);
-  const [sortStatus, setSortStatus] = React.useState(false);
+  const [sortStatus, setSortStatus] = React.useState(true);
   let [sortAmount, setSortAmount] = useState<number>(0);
 
 
@@ -100,75 +100,93 @@ export default function Home() {
   }
 
   return (
-    <Container sx={{ bgcolor: "white", width: 1000 ,height:2000,marginLeft:9}}>
-      <IconButton onClick={() => { setFilterStatus(!filterStatus) }}>
-        <FilterAltIcon sx={{marginLeft:"-5rem"}}/>
-      </IconButton>
-      {filterStatus && <Container>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={productList.map((item: any) => (
-            item.productType
-          ))}
-          onChange={(event, value) => handleChange(value)}
-          sx={{ width: 200}}
-          renderInput={(params) => <TextField {...params} label="Filter with Name" />}
+    <Container sx={{ width: 1500, backgroundColor: 'white', marginTop: -3 }}>
+      <Box sx={{ display: "flex" }}>
+        <Box
+          component="nav"
+          sx={{
+            flexShrink: 0,
+            backgroundColor: 'white'
+          }}
+        >
+          <IconButton onClick={() => { setFilterStatus(filterStatus) }}>
+            <FilterAltIcon />
+          </IconButton>
+          {filterStatus && <Container>
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={productList.map((item: any) => (
+                item.productType
+              ))}
+              onChange={(event, value) => handleChange(value)}
+              sx={{ width: 200 }}
+              renderInput={(params) => <TextField {...params} label="Select Product Type" />}
+            />
+          </Container>}
+          <IconButton sx={{ marginTop: 10 }}
+            onClick={() => {
+              setSortStatus(sortStatus);
+            }}
+          >
+            <SortIcon />
+          </IconButton>
+          {
+            sortStatus && (
+              <Grid>
+                <Grid>
+                  <Button onClick={handleSort}>
+                    <CurrencyRupeeIcon />
+                    Low to High
+                  </Button>
+                </Grid>
+                <Grid>
+                  <Button onClick={changeSort}>
+                    <CurrencyRupeeIcon />
+                    High to Low
+                  </Button>
+                </Grid>
+              </Grid>
+            )
+          }
+        </Box>
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            minHeight: "100vh",
+          }}
+        >
 
-        />
-      </Container>}
-
-      <IconButton
-        onClick={() => {
-          setSortStatus(!sortStatus);
-        }}
-      >
-        <SortIcon sx={{marginLeft:"40rem"}} />
-      </IconButton>
-      {sortStatus && (
-        <Container>
-          <Grid>
-            <Button onClick={handleSort}>
-              <CurrencyRupeeIcon />
-              Low -- High
-            </Button>
-          </Grid>
-          <Grid>
-            <Button onClick={changeSort}>
-              <CurrencyRupeeIcon />
-              High -- Low
-              <Grid></Grid>
-            </Button>
-          </Grid>
-        </Container>
-      )}
-
-<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, width: 1000 }}>
-        <ImageList sx={{ width: 1600 }} cols={3} rowHeight={160}>
-          {productList.map((product: any) => (
-            <Box p={3}>
-              <Box height={'280px'} border={'1px solid #e8e8e8'}>
-                <Box component={'img'} src={product.picture} width={'100%'} height={'100%'} sx={{ objectFit: 'contain', objectPosition: 'center' }} />
-              </Box>
-              <Box p={0} pb={0}>
-                <Box my={2}>
-                  <Typography sx={{fontSize:'medium',marginLeft:'13'}}>
-                    {product.productName} <br></br> {product.productType}
-                  </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, width: 900 }}>
+            <ImageList sx={{ width: 1600 }} cols={3} rowHeight={160}>
+              {productList.map((product: any) => (
+                <Box p={3}>
+                  <Box height={'280px'} border={'1px solid #e8e8e8'}>
+                    <Box component={'img'} src={product.picture} width={'100%'} height={'100%'} sx={{ objectFit: 'contain', objectPosition: 'center' }} />
+                  </Box>
+                  <Box p={0} pb={0}>
+                    <Box my={2}>
+                      <Typography sx={{ fontSize: 'medium', marginLeft: '13' }}>
+                        {product.productName} <br></br> {product.productType}
+                      </Typography>
+                    </Box>
+                    <Box my={2}>
+                      <Typography fontSize={'medium'} fontWeight={'bold'}>
+                        ₹{product.productPrice}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box px={2}>
+                    <Button fullWidth variant={'outlined'}>Add to Cart {" "} <ShoppingCartIcon /></Button>
+                  </Box>
                 </Box>
-                <Box my={2}>
-                  <Typography fontSize={'medium'} fontWeight={'bold'}>
-                    ₹{product.productPrice}
-                  </Typography>
-                </Box>
-              </Box>
-              <Box px={2}>
-                <Button fullWidth variant={'outlined'}>Add to Cart {" "} <ShoppingCartIcon /></Button>
-              </Box>
-            </Box>
-          ))}
-        </ImageList>
+              ))}
+            </ImageList>
+          </Box>
+        </Box>
       </Box>
-    </Container>
+    </Container >
   );
 }

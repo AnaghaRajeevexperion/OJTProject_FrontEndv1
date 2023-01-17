@@ -20,6 +20,8 @@ import CardActions from "@mui/material/CardActions";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Grid from '@material-ui/core/Grid';
 import Rating from '@mui/material/Rating';
+import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
+import SortRoundedIcon from '@mui/icons-material/SortRounded';
 
 export default function Home() {
   type Product = {
@@ -98,9 +100,9 @@ export default function Home() {
   }
 
   return (
-    <Container sx={{ bgcolor: "white", width: 1000 ,height:2000,marginLeft:0}}>
+    <Container sx={{ bgcolor: "white", width: 1000 ,height:2000,marginLeft:9}}>
       <IconButton onClick={() => { setFilterStatus(!filterStatus) }}>
-        <FilterAltIcon />
+        <FilterAltIcon sx={{marginLeft:"-5rem"}}/>
       </IconButton>
       {filterStatus && <Container>
         <Autocomplete
@@ -114,7 +116,6 @@ export default function Home() {
           renderInput={(params) => <TextField {...params} label="Filter with Name" />}
 
         />
-
       </Container>}
 
       <IconButton
@@ -122,7 +123,7 @@ export default function Home() {
           setSortStatus(!sortStatus);
         }}
       >
-        <SortIcon />
+        <SortIcon sx={{marginLeft:"40rem"}} />
       </IconButton>
       {sortStatus && (
         <Container>

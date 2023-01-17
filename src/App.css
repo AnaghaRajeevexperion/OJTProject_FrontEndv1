@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+h1{
+
+  position: absolute;
+  white-space: nowrap;
+  color:rgb(16, 71, 110);
+  animation: floatText 8s infinite alternate ease-in-out;
+}
+
+@keyframes floatText{
+  from {
+    left: 00%;
+  }
+
+  to {
+    /* left: auto; */
+    left: 50%;
+  }
+}

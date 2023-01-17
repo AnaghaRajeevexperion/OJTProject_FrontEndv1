@@ -9,6 +9,7 @@ function App() {
   return (
     <Fragment>
       <Navbar></Navbar>
+      <h1>Offers available for selected products only!</h1>
     <Home/>
     <BrowserRouter>
     <Switch>

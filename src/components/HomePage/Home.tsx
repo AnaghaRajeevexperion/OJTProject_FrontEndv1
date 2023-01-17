@@ -66,31 +66,31 @@ export default function Home() {
 
   const changeSort = (event: React.MouseEvent<HTMLButtonElement>) => {
     axios.get('http://localhost:8080/products/productPrice/desc')
-    .then(
-      response => {
-        const products = response.data;
-        setProductList(products);
-      }
-    )
+      .then(
+        response => {
+          const products = response.data;
+          setProductList(products);
+        }
+      )
   };
 
   const handleChange = (value: any) => {
     if (value != null) {
-      axios.get('http://localhost:8080/products/all?productType='+value)
-      .then(
-        response => {
-          const products = response.data;
-          setProductList(products);
-        }
-      )
+      axios.get('http://localhost:8080/products/all?productType=' + value)
+        .then(
+          response => {
+            const products = response.data;
+            setProductList(products);
+          }
+        )
     } else {
       axios.get('http://localhost:8080/products/all')
-      .then(
-        response => {
-          const products = response.data;
-          setProductList(products);
-        }
-      )
+        .then(
+          response => {
+            const products = response.data;
+            setProductList(products);
+          }
+        )
     }
   };
   if (!productList) {
@@ -98,7 +98,7 @@ export default function Home() {
   }
 
   return (
-    <Container sx={{ bgcolor: "white", width: 1000 }}>
+    <Container sx={{ bgcolor: "white", width: 1000 ,height:2000,marginLeft:0}}>
       <IconButton onClick={() => { setFilterStatus(!filterStatus) }}>
         <FilterAltIcon />
       </IconButton>
@@ -110,7 +110,7 @@ export default function Home() {
             item.productType
           ))}
           onChange={(event, value) => handleChange(value)}
-          sx={{ width: 200 }}
+          sx={{ width: 200}}
           renderInput={(params) => <TextField {...params} label="Filter with Name" />}
 
         />
@@ -135,62 +135,39 @@ export default function Home() {
           <Grid>
             <Button onClick={changeSort}>
               <CurrencyRupeeIcon />
-              High
-
-              -Low
+              High -- Low
               <Grid></Grid>
             </Button>
           </Grid>
         </Container>
       )}
 
-
-
-
-
-      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, width: 1000 }}>
+<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, width: 1000 }}>
         <ImageList sx={{ width: 1600 }} cols={3} rowHeight={160}>
-          {productList.map((item: any) => (
-            <Card  sx={{ height: 350 }}>
-              <AspectRatio>
-                <img
-                  src={item.picture}
-                  srcSet={item.picture}
-                  alt={item.title}
-                  loading="lazy"
-                />
-              </AspectRatio>
-              <CardContent>
-                <Typography sx={{ color: "white", fontWeight: "bold", fontFamily: "cursive" }}>
-                  {item.productName}
-                </Typography>
-                <Typography gutterBottom variant="solid" component="div">
-                  ₹{item.productPrice}
-                </Typography>
-                <Rating value={item.rating} precision={0.1} readOnly sx={{
-                  '& .MuiRating-iconFilled': {
-                    color: 'violet',
-                  }
-                }} />
-                <CardActions>
-                  <CardActions disableSpacing>
-                    {/* <IconButton aria-label="add to favorites">
-                      <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="share">
-                      <ShareIcon />
-                    </IconButton>
-                    <IconButton aria-label="share">
-                      <ShoppingCartIcon />
-                    </IconButton> */}
-                  </CardActions>
-                </CardActions>
-              </CardContent>
-            </Card>
+          {productList.map((product: any) => (
+            <Box p={3}>
+              <Box height={'280px'} border={'1px solid #e8e8e8'}>
+                <Box component={'img'} src={product.picture} width={'100%'} height={'100%'} sx={{ objectFit: 'contain', objectPosition: 'center' }} />
+              </Box>
+              <Box p={0} pb={0}>
+                <Box my={2}>
+                  <Typography sx={{fontSize:'medium',marginLeft:'13'}}>
+                    {product.productName} <br></br> {product.productType}
+                  </Typography>
+                </Box>
+                <Box my={2}>
+                  <Typography fontSize={'medium'} fontWeight={'bold'}>
+                    ₹{product.productPrice}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box px={2}>
+                <Button fullWidth variant={'outlined'}>Add to Cart {" "} <ShoppingCartIcon /></Button>
+              </Box>
+            </Box>
           ))}
         </ImageList>
       </Box>
     </Container>
   );
 }
-

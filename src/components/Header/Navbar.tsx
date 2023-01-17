@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import {useState} from 'react'
 import Axios from 'axios';
-import image from '../../assets/images/profile.jpg'
+import image from '../../assets/images/homepageprofile.webp'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material';
@@ -15,8 +15,9 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } 
 import Box from '@mui/material/Box';
 import { GoogleLogin } from 'react-google-login'
 import { GoogleLogout } from 'react-google-login'
-import { gapi } from 'gapi-script'
+import { gapi } from 'gapi-script';
 import axios from "axios";
+import "./Navbar.module.css";
 
 
 const clientId="1023795112660-8mjlddldunru0no0mnj6vmh55bq447tu.apps.googleusercontent.com"
@@ -142,8 +143,7 @@ useEffect(()=>{
             onClose={() => setLoggin(false)}
             aria-labelledby='dialog-title'
             aria-describedby='dialog-description'
-          //   PaperProps={{ sx: { width: "20%", height: "20%" } }
-          // }
+       
             >
           
             <DialogContent>
